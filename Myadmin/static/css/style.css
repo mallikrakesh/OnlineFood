@@ -1,0 +1,17 @@
+.tbl_td
+{
+    text-align: center;
+    font-size: 20px;
+}
+.tbl_th
+{
+    text-align: center;
+    font-size: 30px;
+    color: grey;
+}
+.tbl_ttl
+{
+    text-align: center;
+    font-size: 40px;
+    color: lightskyblue;
+}

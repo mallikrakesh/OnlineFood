@@ -1,0 +1,103 @@
+{% extends 'myadmin/welcome.html' %}
+
+{% block admin_welcome %}
+    {% load static %}
+ <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <div class="col-sm-6">
+        <h1>Add City</h1>
+        <br>
+        <form action="{% url 'saveCity' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div class="row">
+              <div class="col">
+                <div class="form-group">
+                    Select State :
+                    <select class="form-control" name="state" id="exampleFormControlSelect1">
+                        {% for st in state %}
+                            <option value="{{ st.id }}">{{ st.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                    <div  class="form-group">
+                        <input type="text" name="city" id="city" class="form-control" placeholder="City Name" value="{{ city }}">
+                    </div>
+                    <div class="custom-file">
+                        <input type="file" name="photo" class="custom-file-input" value="{{ photo }}" id="photo" aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose Photo</label>
+                    </div><br>
+                    <br><button type="submit" class="btn btn-success">Add</button>
+                    <input type="hidden" name="upd_idno" value="{{ idno }}">
+                    <input type="hidden" name="city_state" value="{{ city_state }}">
+                </div>
+              </div>
+        </form>
+    {% if error %}
+        <span style="font-size: 30px;color: red">{{ error }}</span>
+    {% endif %}
+    {% if success %}
+        <span style="font-size: 30px;color: green">{{ success }}</span>
+    {% endif %}
+    {% for mess in messages %}
+        <span style="font-size: 30px;color: green">{{ mess }}</span>
+    {% endfor %}
+
+ <br>
+    {% if city_data %}
+
+        <table align="center" border="5" style="min-width: 500px" >
+        <tr><th class="tbl_ttl" colspan="6">City</th></tr>
+            <tr>
+                <th class="tbl_th">Id</th>
+                <th class="tbl_th">Name</th>
+                <th class="tbl_th">Image</th>
+                <th class="tbl_th">State Name</th>
+                <th class="tbl_th">Update</th>
+                <th class="tbl_th">Delete</th>
+            </tr>
+            {% for data in city_data %}
+            <tr>
+                <th class="tbl_td">{{ data.id }}</th>
+                <th class="tbl_td">{{ data.name }}</th>
+                <th class="tbl_td"><img src="{{ data.photo.url }}" height="80" width="80"></th>
+                <th class="tbl_td">{{ data.city_state.name }}</th>
+                <th class="tbl_td"><a href="{% url 'updateCity' %}?idno={{ data.id }}">
+                    <img src="{% static 'images/update.png' %}" width="30" height="30">
+                </a></th>
+                <th class="tbl_td">
+{#                    <a href="{% url 'deleteState' %}?idno={{ data.id }}"><button>Delete</button></a>#}
+
+
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#st{{ data.id }}">
+                        Delete
+                    </button>
+
+<!-- Modal -->
+<div class="modal fade" id="st{{ data.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+          <a href="{% url 'deleteCity' %}?idno={{ data.id }}"><button type="button" class="btn btn-primary">Yes</button></a>
+      </div>
+    </div>
+  </div>
+</div>
+                </th>
+            </tr>
+        {% endfor %}
+        </table>
+        {% else %}
+        No Data
+    {% endif %}
+    </div>
+    {% endblock %}

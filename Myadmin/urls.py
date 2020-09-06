@@ -19,6 +19,28 @@ from django.urls import path
 from Myadmin import views
 
 urlpatterns = [
-    path('',views.showIndex,name='admin_home')
+    path('',views.showIndex,name='admin_home'),
+    path('myadmin_login_check/',views.myadmin_login_check,name='myadmin_login_check'),
+    path('welcome/',views.myadmin_welcome,name='welcome'),
+    path('state/', views.openState, name='state'),
+    path('city/', views.openCity, name='city'),
+    path('cuisine/', views.openCusine, name='cuisine'),
+    path('vendor/', views.openVendor, name='vendor'),
+    path('resports/', views.openReporsts, name='reports'),
+
+    #State Operation
+    path('saveState/',views.saveState,name='saveState'),
+    path('updateState/',views.updateState,name="updateState"),
+    path('deleteState/',views.deleteState,name="deleteState"),
+
+    #City Operation
+    path('saveCity/',views.saveCity,name='saveCity'),
+    path('updateCity/', views.updateCity, name="updateCity"),
+    path('deleteCity/', views.deleteCity, name="deleteCity"),
+
+    #Cusine Operation
+    path('saveCuisine/', views.saveCuisine, name="saveCuisine"),
+    path('updateCuisine/', views.updateCuisine, name="updateCuisine"),
+    path('deleteCuisine/', views.deleteCuisine, name="deleteCuisine"),
 
 ]

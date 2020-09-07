@@ -135,7 +135,7 @@ def updateCuisine(request):
     return render(request,"myadmin/opencuisine.html",context)
 
 def deleteCuisine(request):
-    print(request.GET.get("idno"))
+
     CuisineModel.objects.get(id=request.GET.get("idno")).delete()
     return redirect('cuisine')
 

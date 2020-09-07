@@ -3,11 +3,14 @@
 {% block admin_welcome %}
 {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+     {% for msg in messages %}
+        <h3>{{ msg }}</h3>
+    {% endfor %}
     <div class="col-sm-6">
-          <h1>Add Cuisine</h1>
-
-<form action="{% url 'saveCuisine' %}" method="post" enctype="multipart/form-data">
+      <form action="{% url 'saveCuisine' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
+            <h1 id="title">Add Cuisine</h1>
+            <br>
             <div class="row">
                 <div class="col">
                     <input type="text" name="cuisine" id="cuisine" class="form-control" placeholder="Cuisine Name" value="{{ cuisine }}">
@@ -21,23 +24,11 @@
                <button type="submit" class="btn btn-success">Add</button>
                     <input type="hidden" name="upd_idno" value="{{ idno }}">
             </div>
-        </form>
-    <br>
-    {% if error %}
-        <span style="font-size: 30px;color: red">{{ error }}</span>
-    {% endif %}
-    {% if success %}
-        <span style="font-size: 30px;color: green">{{ success }}</span>
-    {% endif %}
-    {% for mess in messages %}
-        <span style="font-size: 30px;color: green">{{ mess }}</span>
-    {% endfor %}
-
- <br>
+        </form><br>
     {% if cuisine_data %}
 
         <table align="center" border="5" style="min-width: 500px">
-        <tr><th class="tbl_ttl" colspan="5">States</th></tr>
+        <tr><th id="title" colspan="5">Cusine Details</th></tr>
             <tr>
                 <th class="tbl_th">Id</th>
                 <th class="tbl_th">Name</th>

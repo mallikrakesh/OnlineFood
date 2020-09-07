@@ -3,14 +3,17 @@
 {% block admin_welcome %}
     {% load static %}
  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <div class="col-sm-6">
-        <h1>Add City</h1>
+    <div class="col-sm-6" >
+        {% for msg in messages %}
+            <h3 class="msg"><strong>{{ msg }}</strong>  </h3>
+        {% endfor %}
         <br>
         <form action="{% url 'saveCity' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
           <div class="row">
-              <div class="col">
-                <div class="form-group">
+              <div class="col-lg-6" style="margin-left: 600px;border: black;border-radius: 10px;border-style: solid;background-color: lightblue;padding: 30px">
+                  <h1 id="title">Add City</h1>
+                  <div class="form-group">
                     Select State :
                     <select class="form-control" name="state" id="exampleFormControlSelect1">
                         {% for st in state %}
@@ -24,28 +27,20 @@
                     <div class="custom-file">
                         <input type="file" name="photo" class="custom-file-input" value="{{ photo }}" id="photo" aria-describedby="inputGroupFileAddon01">
                         <label class="custom-file-label" for="inputGroupFile01">Choose Photo</label>
-                    </div><br>
-                    <br><button type="submit" class="btn btn-success">Add</button>
+                    </div><br><br>
+                    <div style="text-align: center">
+                    <button type="submit" class="btn btn-success">Save</button>
                     <input type="hidden" name="upd_idno" value="{{ idno }}">
                     <input type="hidden" name="city_state" value="{{ city_state }}">
+                    </div>
                 </div>
               </div>
         </form>
-    {% if error %}
-        <span style="font-size: 30px;color: red">{{ error }}</span>
-    {% endif %}
-    {% if success %}
-        <span style="font-size: 30px;color: green">{{ success }}</span>
-    {% endif %}
-    {% for mess in messages %}
-        <span style="font-size: 30px;color: green">{{ mess }}</span>
-    {% endfor %}
-
  <br>
     {% if city_data %}
 
-        <table align="center" border="5" style="min-width: 500px" >
-        <tr><th class="tbl_ttl" colspan="6">City</th></tr>
+        <table border="5" style="min-width: 600px;margin-left: 500px" >
+        <tr><th id="title" colspan="6">City Details</th></tr>
             <tr>
                 <th class="tbl_th">Id</th>
                 <th class="tbl_th">Name</th>

@@ -2,7 +2,6 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from Myadmin.models import *
 
-# Create your views here.
 def showIndex(request):
     return render(request,'myadmin/login.html')
 
@@ -16,16 +15,17 @@ def myadmin_login_check(request):
             return render(request, "myadmin/login.html", {"error": "Invalid User"})
     else:
         request.session["admin_status"] = False
-        return render(request, "myadmin/login.html", {"error": "Admin Logout Success"})
+        return render(request, "myadmin/login.html", {"error": "Admin Logout Successfully"})
 
 
 def myadmin_welcome(request):
     return render(request,'myadmin/welcome.html')
 
+# State Operation
+
 def openState(request):
     return render(request,"myadmin/openstate.html",{"state_data": StateModel.objects.all()})
 
-# State Operation
 def saveState(request):
     if request.POST.get("upd_idno"):
         sm = StateModel.objects.get(id=request.POST.get("upd_idno"))
@@ -35,26 +35,28 @@ def saveState(request):
         else:
             sm.photo = request.FILES.get("photo")
         sm.save()
-        return render(request, "myadmin/openstate.html",{"success": "Updated Successfully", "state_data": StateModel.objects.all()})
+        messages.success(request,'Updated Successfully')
+        return render(request, "myadmin/openstate.html",{ "state_data": StateModel.objects.all()})
     else:
         try:
             StateModel(name=request.POST.get("state"), photo=request.FILES.get("photo")).save()
-            messages.success(request, "State Added")
+            messages.success(request, "State Added Successfully")
             return redirect('state')
 
         except:
             StateModel.objects.get(name=request.POST.get("state"))
-            return render(request, "myadmin/openstate.html",{"error": "State Already Exist", "state_data": StateModel.objects.all()})
+            messages.error(request,'State Already Exist')
+            return render(request, "myadmin/openstate.html",{ "state_data": StateModel.objects.all()})
 
 
 def updateState(request):
     idno = request.GET.get("idno")
     sm = StateModel.objects.get(id=idno)
-    return render(request, "myadmin/openstate.html",{"idno": sm.id, "state": sm.name, "photo": sm.photo, "state_data": StateModel.objects.all()})
+    context={"idno": sm.id, "state": sm.name, "photo": sm.photo, "state_data": StateModel.objects.all()}
+    return render(request, "myadmin/openstate.html",context)
 
 def deleteState(request):
     print(request.GET.get("idno"))
-    print(type(request.GET.get("idno")))
     StateModel.objects.get(id=request.GET.get("idno")).delete()
     return redirect('state')
 
@@ -76,29 +78,34 @@ def saveCity(request):
         sm = StateModel.objects.get(id=request.POST.get("state"))
         cm.city_state.id = sm
         cm.save()
-        return render(request, "myadmin/opencity.html",{"success": "Updated Successfully", "city_data": CityModel.objects.all(),"state": StateModel.objects.only('name')})
+        messages.success(request,'Updated Successfully')
+        return render(request, "myadmin/opencity.html",{"city_data": CityModel.objects.all(),"state": StateModel.objects.only('name')})
     else:
         try:
             CityModel(name=request.POST.get("city"), photo=request.FILES.get("photo"), city_state_id=request.POST.get("state")).save()
-            messages.success(request, "City Added")
+            messages.success(request, "City Added Successfully")
             return redirect('city')
         except:
             CityModel.objects.get(name=request.POST.get("city"))
-            return render(request, "myadmin/opencity.html",{"error": "City Already Exist", "city_data": CityModel.objects.all()})
+            messages.error(request, "City Already Exist")
+            return render(request, "myadmin/opencity.html",{"city_data": CityModel.objects.all()})
 
 
 def updateCity(request):
     cm = CityModel.objects.get(id= request.GET.get("idno"))
-    return render(request, "myadmin/opencity.html",{"idno": cm.id, "city_state":cm.city_state.id, "city": cm.name, "photo": cm.photo, "city_data": CityModel.objects.all(),"state":StateModel.objects.only('name')})
+    context = {"idno": cm.id, "city_state":cm.city_state.id, "city": cm.name, "photo": cm.photo, "city_data": CityModel.objects.all(),"state":StateModel.objects.only('name')}
+    return render(request, "myadmin/opencity.html",context)
 
 
 def deleteCity(request):
     CityModel.objects.get(id=request.GET.get("idno")).delete()
     return redirect('city')
 
+#Cusine Operation
+
 def openCusine(request):
     return render(request,"myadmin/opencuisine.html")
-#Cusine Operation
+
 def saveCuisine(request):
     if request.POST.get("upd_idno"):
         cm=CuisineModel.objects.get(id=request.POST.get("upd_idno"))
@@ -108,12 +115,13 @@ def saveCuisine(request):
         else:
             cm.photo=request.FILES.get("photo")
         cm.save()
-        return render(request,"myadmin/opencuisine.html",{"success":"Updated Successfully","cuisine_data": CuisineModel.objects.all()})
+        messages.success(request,"Updated Successfully")
+        return render(request,"myadmin/opencuisine.html",{"cuisine_data": CuisineModel.objects.all()})
     else:
         try:
             CuisineModel.objects.get(type=request.POST.get("cuisine"))
-            return render(request, "myadmin/opencuisine.html",
-                          {"error": "Cuisine Already Exist", "cuisine_data": CuisineModel.objects.all()})
+            messages.error(request,"Cuisine Already Exist")
+            return render(request, "myadmin/opencuisine.html", {"cuisine_data": CuisineModel.objects.all()})
         except:
             CuisineModel(type=request.POST.get("cuisine"), photo=request.FILES.get("photo")).save()
             messages.success(request, "Cuisine Added")
@@ -123,11 +131,11 @@ def saveCuisine(request):
 def updateCuisine(request):
     idno=request.GET.get("idno")
     cm=CuisineModel.objects.get(id=idno)
-    return render(request,"myadmin/opencuisine.html",{"idno":cm.id,"cuisine":cm.type,"photo":cm.photo,"cuisine_data":CuisineModel.objects.all()})
+    context = {"idno":cm.id,"cuisine":cm.type,"photo":cm.photo,"cuisine_data":CuisineModel.objects.all()}
+    return render(request,"myadmin/opencuisine.html",context)
 
 def deleteCuisine(request):
     print(request.GET.get("idno"))
-    print(type(request.GET.get("idno")))
     CuisineModel.objects.get(id=request.GET.get("idno")).delete()
     return redirect('cuisine')
 

@@ -1,3 +1,21 @@
+
+#title{
+    text-align: center;
+    font-size: 30px;
+    color: wheat;
+    background-color: maroon;
+    font-family: "Agency FB";
+    padding: 10px;
+}
+.msg
+{
+    text-align: center;
+    font-size: 30px;
+    color: blue;
+    font-family: "Agency FB";
+}
+
+
 .tbl_td
 {
     text-align: center;
@@ -8,10 +26,4 @@
     text-align: center;
     font-size: 30px;
     color: grey;
-}
-.tbl_ttl
-{
-    text-align: center;
-    font-size: 40px;
-    color: lightskyblue;
 }

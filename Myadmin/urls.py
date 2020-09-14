@@ -42,6 +42,7 @@ urlpatterns = [
     path('deleteCuisine/', views.deleteCuisine, name="deleteCuisine"),
 
     path('vendor/', views.openVendor, name='vendor'),
+    path('admin_vendor_approve/', views.admin_vendor_approve, name='admin_vendor_approve'),
     path('resports/', views.openReporsts, name='reports'),
 
 

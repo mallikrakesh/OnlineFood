@@ -1,0 +1,110 @@
+{% extends 'common.html' %}
+{% block common %}
+
+<body style="background-color: lightblue">
+<div class="register-box">
+
+  <div class="card" style="margin-top: 30px">
+    <div class="card-body register-card-body">
+      <p class="login-box-msg">Register a new membership</p>
+
+      <form action="{% url 'vender_save' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Stall name" name="v1" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="Mobile No" name="v2" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+
+         <div class="input-group mb-3">
+          <input type="number" class="form-control" placeholder="Contact No" name="v3" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-envelope"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+        <span>Select Cuisine</span>
+        <select class="form-control" name="v4" required>
+            <option>Select</option>
+            {% for c in cuisine %}
+                    <option value="{{ c.id }}">{{ c.type }}</option>
+            {% endfor %}
+        </select>
+          <div class="input-group-append">
+            <div class="input-group-text">
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+         <span >Photo</span>
+          <input type="file" name="v5" required>
+        </div>
+
+        <div class="input-group mb-3">
+            <textarea  class="form-control" placeholder="Address" name="v6" required></textarea>
+        </div>
+
+        <div class="input-group mb-3">
+        <span>Select City</span>
+        <select class="form-control" name="v7" required>
+            <option>Select</option>
+           {% for c in city %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+        </select>
+          <div class="input-group-append">
+            <div class="input-group-text">
+            </div>
+          </div>
+        </div>
+
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Password" name="v8" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-8">
+            <div class="icheck-primary">
+              <input type="checkbox" id="agreeTerms" name="terms" value="agree">
+              <label for="agreeTerms">
+               I agree to the <a href="#">terms</a>
+              </label>
+            </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Register</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
+
+      <div class="social-auth-links text-center">
+        <p>- OR -</p>
+
+      <a href="{% url 'vendor_main' %}" class="text-center">I already have a membership</a>
+
+
+</body>
+{% endblock %}
+

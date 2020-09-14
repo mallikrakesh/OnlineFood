@@ -20,7 +20,7 @@ from OnlineFood import settings
 
 urlpatterns = [
     path('myadmin/',include('Myadmin.urls')),
-    path('vender/',include('Vender.urls')),
+    path('vendor/',include('Vender.urls')),
     path('customer/',include('Customer.urls')),
 
 ]

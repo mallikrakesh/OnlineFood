@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from django.contrib import messages
 from Myadmin.models import *
+from Vender.models import VendorRegistrationModel
+from Myadmin.otpsending import sendASMS
 
 def showIndex(request):
     return render(request,'myadmin/login.html')
@@ -142,10 +144,16 @@ def deleteCuisine(request):
 
 
 def openVendor(request):
-    return render(request,"myadmin/openvendor.html")
+    return render(request,"myadmin/openvendor.html",{"pending":VendorRegistrationModel.objects.filter(status="pending"),"approved":VendorRegistrationModel.objects.filter(status="approved")})
 
+def admin_vendor_approve(request):
+    res = VendorRegistrationModel.objects.get(id=request.GET.get("idno"))
+    sname = res.stall_name
+    cno = res.contact_1
+    res.status = 'approved'
+    res.save()
+    sendASMS(str(cno), "Hello " + sname + "! \n We are happy to inform that your registration is approved by Admin")
+    return openVendor(request)
 
 def openReporsts(request):
     return render(request,"myadmin/openreports.html")
-
-

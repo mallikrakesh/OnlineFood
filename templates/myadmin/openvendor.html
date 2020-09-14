@@ -1,9 +1,95 @@
 {% extends 'myadmin/welcome.html' %}
 
 {% block admin_welcome %}
-
+    {% load  static %}
     <div class="col-sm-6">
           <h1>Vendor page</h1>
     </div>
-
+  <table align="center" border="2">
+        <tr><th>Pending</th></tr>
+        {% if pending %}
+        <tr><th>
+            <table align="center" border="2">
+                <tr style="background-color: orangered;color: white;text-align: center;padding: 10px">
+                    <th>ID</th>
+                    <th>Stall Name</th>
+                    <th>Contact No 1</th>
+                    <th>Contact No 2</th>
+                    <th>Cuisine</th>
+                    <th>Photo</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Approve</th>
+                    <th>Cancel</th>
+                </tr>
+                {% for x in pending %}
+                    <tr>
+                    <th>{{ x.id }}</th>
+                    <th>{{ x.stall_name }}</th>
+                    <th>{{ x.contact_1 }}</th>
+                    <th>{{ x.contact_2 }}</th>
+                    <th>{{ x.cuisine_type.type }}</th>
+                    <th><img src="{{ x.photo.url }}" width="80" height="80"></th>
+                    <th>{{ x.address }}</th>
+                    <th>{{ x.vendor_city.name }}</th>
+                    <th>{{ x.vendor_city.city_state.name }}</th>
+                    <th style="text-align: center">
+                        <a href="{% url 'admin_vendor_approve' %}?idno={{ x.id }}">
+                            <img src="{% static 'images/approve.png' %}">
+                        </a>
+                    </th>
+                    <th style="text-align: center">
+                        <a>
+                            <img src="{% static 'images/cancel.png' %}">
+                        </a>
+                    </th>
+                </tr>
+                {% endfor %}
+            </table>
+        </th></tr>
+        {% else %}
+            <tr><th><h3>No Pending Vendors</h3></th></tr>
+        {% endif %}
+        <tr><th>Approved</th></tr>
+    {% if approved %}
+        <tr><th>
+            <table align="center" border="2">
+                <tr style="background-color: #0032ff;color: white;text-align: center;padding: 10px">
+                    <th>ID</th>
+                    <th>Stall Name</th>
+                    <th>Contact No 1</th>
+                    <th>Contact No 2</th>
+                    <th>Cuisine</th>
+                    <th>Photo</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Cancel</th>
+                </tr>
+                {% for x in approved %}
+                    <tr>
+                    <th>{{ x.id }}</th>
+                    <th>{{ x.stall_name }}</th>
+                    <th>{{ x.contact_1 }}</th>
+                    <th>{{ x.contact_2 }}</th>
+                    <th>{{ x.cuisine_type.type }}</th>
+                    <th><img src="{{ x.photo.url }}" width="80" height="80"></th>
+                    <th>{{ x.address }}</th>
+                    <th>{{ x.vendor_city.name }}</th>
+                    <th>{{ x.vendor_city.city_state.name }}</th>
+                    <th style="text-align: center">
+                        <a>
+                            <img src="{% static 'images/cancel.png' %}">
+                        </a>
+                    </th>
+                </tr>
+                {% endfor %}
+            </table>
+        </th></tr>
+        {% else %}
+            <tr><th><h3>No Approved Vendors</h3></th></tr>
+        {% endif %}
+        <tr><th>Canceled</th></tr>
+    </table>
 {% endblock %}

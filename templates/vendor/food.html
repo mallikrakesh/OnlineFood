@@ -1,0 +1,73 @@
+{% extends 'vendor/vendor_welcome.html' %}
+
+{% block vendor_welcome %}
+
+    <table align="center" border="2" width="1000">
+        <tr><th colspan="5" style="text-align: center;font-size: 30px;font-family: 'Agency FB';background-color: #00b503;color: white">
+            Food Operations</th></tr>
+        <tr>
+            <th colspan="5" style="color: white;background-color: #0032ff;font-size: 20px;font-family: 'Agency FB'">
+                Add Food Items</th>
+        </tr>
+
+        <form action="{% url 'vendor_save_food' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        <tr>
+            <th style="padding: 10px">
+                <input class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                    type="text" placeholder="Name" name="f1" required style="width: 200px">
+            </th>
+
+            <th>
+                Food Type <select name="f2">
+                    {% for x in food_type %}
+                        <option value="{{ x.id }}">{{ x.name }}</option>
+                    {% endfor %}
+                </select>
+            </th>
+
+            <th style="padding: 10px"><input class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"
+                    type="number" placeholder="Price" name="f3" required style="width: 200px">
+            </th>
+
+            <th>
+                <input type="file" name="f4" required>
+            </th>
+            <th style="padding: 10px;text-align: center"><button class="btn btn-danger"
+                    type="submit">Save</button>
+            </th>
+        </tr>
+        </form>
+
+        <tr>
+            <th colspan="5">
+                <table align="center" border="2" width="1000">
+                    <tr style="background-color: #ff0900;font-size: 20px;font-family: 'Agency FB';color: white;text-align: center">
+                        <th>Id No</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Photo</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+
+                    {% for x in food %}
+                        <tr>
+                        <td>{{ x.id }}</td>
+                        <td>{{ x.name }}</td>
+                        <td>{{ x.food_type.name }}</td>
+                        <td>{{ x.price }}</td>
+                        <td>
+                        <img src="{{ x.photo.url }}" class="rounded mx-auto d-block"  width="50" height="50" alt="No Image">
+                        </td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </th>
+        </tr>
+
+    </table>
+
+{% endblock %}

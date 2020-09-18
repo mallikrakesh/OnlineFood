@@ -1,0 +1,51 @@
+{% extends 'common.html' %}
+
+{% block common %}
+    {% load static %}
+    <section class="jumbotron text-center">
+        {% include 'customer/menu.html' %}
+    </section>
+    <div class="container" style="background-color: #b8e5f3">
+    <div class="register-box"  style="padding-top: 10px">
+
+        <div class="card">
+            <div class="card-body register-card-body">
+                <p class="login-box-msg">OTP</p>
+                <form action="{% url 'customer_check_otp' %}" method="post">
+                    {% csrf_token %}
+                    <div class="input-group mb-3">
+                        <h3>Contact No : {{ contactNo }}</h3>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="hidden" name="cno" value="{{ contactNo }}">
+                        <input type="password" class="form-control" placeholder="OTP" name="otp">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block">Verify</button>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <br>
+                {% if message %}
+                <div class="alert alert-primary" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endif %}
+            </div>
+            <!-- /.form-box -->
+        </div>
+        <!-- /.card -->
+    </div>
+    </div>
+
+{% endblock %}

@@ -1,7 +1,6 @@
 {% extends 'vendor/vendor_welcome.html' %}
 
-{% block vender_welcome %}
-    {% load static %}
+{% block vendor_welcome %}
 
     <table align="center" border="2" width="1000">
         <tr><th colspan="3" style="text-align: center;font-size: 30px;font-family: 'Agency FB';background-color: orangered;color: white">Food Type Operations</th></tr>
@@ -34,19 +33,9 @@
 
                     {% for x in food_type %}
                         <tr>
-                            <td class="tbl_td">{{ x.id }}</td>
-                            <td class="tbl_td">{{ x.name }}</td>
-                            <td class="tbl_td">{{ x.status }}</td>
-                            <td class="tbl_td">
-                                <a>
-                                    <img src="{% static 'images/update.png' %}" width="30" height="30">
-                                </a>
-                            </td>
-                            <td class="tbl_td">
-                                <a>
-                                    <img src="{% static 'images/trash.png' %}" width="30" height="30">
-                                </a>
-                            </td>
+                            <td>{{ x.id }}</td>
+                            <td>{{ x.name }}</td>
+                            <td>{{ x.status }}</td>
                         </tr>
                     {% endfor %}
 

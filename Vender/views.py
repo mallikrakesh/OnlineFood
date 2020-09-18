@@ -48,7 +48,8 @@ def vendor_welcome(request,pk):
 def vendorFoodtype(request):
     vendor_details = VendorRegistrationModel.objects.get(id=request.session['vendor_id'])
     context= {"vendor_data": vendor_details,"food_type": FoodTypeModel.objects.filter(vendor_id_id=request.session['vendor_id'])}
-    return render(request, "vendor/foodtype.html",context )
+    print(context)
+    return render(request, "vendor/foodtype.html",context)
 
 
 def vendor_save_foodtype(request):

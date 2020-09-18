@@ -1,0 +1,79 @@
+{% extends 'common.html' %}
+
+{% block common %}
+    {% load static %}
+    <section class="jumbotron text-center">
+        {% include 'customer/menu.html' %}
+    </section>
+    <div class="container" style="background-color: #b8e5f3;padding: 20px">
+        <div class="register-box"  >
+            <div class="card">
+                <div class="card-body register-card-body">
+                    <p class="login-box-msg">Register a new Member</p>
+                    <form action="{% url 'customer_save' %}" method="post">
+                        {% csrf_token %}
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Name" name="c1" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-user"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="number" class="form-control" placeholder="Contact" name="c2" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-phone"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Address" name="c3" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-address-book"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="input-group mb-3">
+
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" for="inputGroupSelect01">Select City</label>
+                            </div>
+
+                            <select class="custom-select" id="inputGroupSelect01" name="c4" required>
+                                <option>Select</option>
+                                {% for x in city %}
+                                    <option value="{{ x.id }}">{{ x.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" placeholder="Password" name="c5" required>
+                            <div class="input-group-append">
+                                <div class="input-group-text">
+                                    <span class="fas fa-lock"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-left: 100px">
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary">SignUp</button>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                    </form>
+
+                    <div class="social-auth-links text-center">
+                        <p>- OR -</p>
+                    </div>
+                    <a href="{% url 'customer_login' %}" class="btn btn-outline-info">I already have a membership</a>
+                </div>
+                <!-- /.form-box -->
+            </div><!-- /.card -->
+        </div>
+    </div>
+{% endblock %}

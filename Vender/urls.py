@@ -29,4 +29,6 @@ urlpatterns = [
 
     path('vendor_food/',views.vendorFood, name='vendor_food'),
     path('vendor_save_food/',views.vendor_save_food, name='vendor_save_food'),
+
+    path('vendor_logout/',views.vendor_login_check,name='vendor_logout')
 ]

@@ -25,5 +25,13 @@ urlpatterns = [
     path('customer_check_otp',views.customer_check_otp,name='customer_check_otp'),
     path('customer_login',views.customer_login,name='customer_login'),
     path('customer_login_check',views.customer_login_check,name='customer_login_check'),
-    path('add_to_cart',views.add_to_cart,name='add_to_cart'),
+    path('customer_welcome/<int:pk>/',views.customer_welcome,name='customer_welcome'),
+    path('customer_menu/',views.customer_menu,name='customer_menu'),
+    path('customer_logout',views.customer_login_check,name='customer_logout'),
+    path('add_to_cart/<int:idno>/',views.add_to_cart,name='add_to_cart'),
+
+
+
+    #Ajax Call
+    path('checkcontact/',views.checkcontact)
 ]

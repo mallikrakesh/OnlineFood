@@ -2,6 +2,7 @@
 
 {% block common %}
     {% load static %}
+    <script type="text/javascript" src="{% static 'js/customer_registration_validation.js' %}"></script>
     <section class="jumbotron text-center">
         {% include 'customer/menu.html' %}
     </section>
@@ -16,15 +17,15 @@
                             <input type="text" class="form-control" placeholder="Name" name="c1" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <span class="fas fa-user"></span>
+                                    <span class="fas fa-user" ></span>
                                 </div>
                             </div>
                         </div>
                         <div class="input-group mb-3">
-                            <input type="number" class="form-control" placeholder="Contact" name="c2" required>
+                            <input type="number" class="form-control" id="input_contact" onblur="checkContact()" placeholder="Contact" name="c2" required>
                             <div class="input-group-append">
                                 <div class="input-group-text">
-                                    <span class="fas fa-phone"></span>
+                                    <span class="fas fa-phone" id="span_contact"></span>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +62,7 @@
                         </div>
                         <div class="row" style="margin-left: 100px">
                             <div class="col-4">
-                                <button type="submit" class="btn btn-primary">SignUp</button>
+                                <button type="submit" class="btn btn-primary" id="btn">SignUp</button>
                             </div>
                             <!-- /.col -->
                         </div>
